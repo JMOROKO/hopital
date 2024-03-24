@@ -22,3 +22,8 @@
 <img src="assets/bootstrap/4-ajout-pom-xml.png" alt="">
 5- Utiliser dans la page html
 <img src="assets/bootstrap/5-utilisation-de-bootstrap.png" alt="">
+<h2>Utilisation de MySQL</h2>
+1- Installation de la dépendance
+<img src="assets/mysql/1-installation-dependance.png" alt="">
+2- Configuration de mysql
+<img src="assets/mysql/2-configuration-mysql.png" alt="">

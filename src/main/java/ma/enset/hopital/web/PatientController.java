@@ -17,11 +17,22 @@ public class PatientController {
 
     @GetMapping("/index")
     public String index(Model model, @RequestParam(name = "page", defaultValue = "0") int page
-            , @RequestParam(name = "size", defaultValue = "5") int size){
-        Page<Patient> patientList = patientRepository.findAll(PageRequest.of(page, size));
+            , @RequestParam(name = "size", defaultValue = "5") int size
+            , @RequestParam(name="keywords", defaultValue = "") String keywords){
+        Page<Patient> patientList;
+        patientList = patientRepository.findByNomContains(keywords, PageRequest.of(page, size));
         model.addAttribute("pages", new int[patientList.getTotalPages()]);
         model.addAttribute("patientList", patientList.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("keywords", keywords);
         return "patients";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam(name="id") Long id, @RequestParam(name="keywords") String keywords, @RequestParam(name="page") int page){
+        // @TODO  est ce que @RequestParam est la méthode appelé par défaut ?
+        patientRepository.deleteById(id);
+        return "redirect:/index?page="+page+"&keywords="+keywords;
     }
 
 }

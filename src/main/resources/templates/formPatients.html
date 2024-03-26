@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+      layout:decorate="template1">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div layout:fragment="content1">
+    <div class="col-md-6 offset-3">
+      <!-- // @TODO comment protéger le formulaire des attaques CSRF? -->
+      <form th:action="@{/save}" method="POST">
+        <div class="form-group">
+          <div class="col-6">
+            <input type="number" name="id" th:value="${patient.id}" hidden="hidden">
+            <lable>nom</lable>
+            <input type="text" name="nom" th:value="${patient.nom}" class="form-control">
+            <span  th:errors="${patient.nom}" class="text-danger"></span>
+          </div>
+          <div class="col-6">
+            <lable>date Naissance</lable>
+            <input type="date" name="dateNaissance" th:value="${patient.dateNaissance}" class="form-control">
+            <span th:errors="${patient.dateNaissance}" class="text-danger"></span>
+          </div>
+          <div class="col-6">
+            <lable>malade</lable>
+            <input type="checkbox" name="malade" th:checked="${patient.malade}" >
+            <span th:errors="${patient.malade}" class="text-danger"></span>
+          </div>
+          <div class="col-6">
+            <lable>score</lable>
+            <input type="number" name="score" th:value="${patient.score}" class="form-control">
+            <span th:errors="${patient.score}" class="text-danger"></span>
+          </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

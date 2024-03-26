@@ -4,9 +4,9 @@
 <img src="assets/dev-tools/1-init-config-dev-tools.png" alt="">
 2- Cliquer sur paramètre avancé
 <img src="assets/dev-tools/2-parametre-avance.png" alt="">
-3- Cocher allow auto-*make to start
+3- Cocher allow auto-make to start
 <img src="assets/dev-tools/3-cocher-allow-auto-make-to-start.png" alt="">
-4- Dérouler sur build, Execute, deploy
+4- Dérouler sur build, Execute, deploy <br>
 5- Cliquer sur compiler
 <img src="assets/dev-tools/4-build-compiler.png" alt="">
 5- Cocher build project automatically
@@ -67,3 +67,17 @@ nous allons transmettre les valeurs par défaut 0 et 5</p>
 <img src="assets/app/7.recherche.png" alt="">
 8. Suppression 
 <img src="assets/app/8.suppression.png" alt="">
+9. Rendu
+<img src="assets/app/10.rendu.png" alt="">
+<h2>Mise en place d'une page template avec thymeleaf</h2>
+1- Recherche de la dépendance thymelead layout dialect maven (11)
+2- Choix de la dernière version
+3- Ajout dans le fichier POM.xml
+4- Création de la page template HTML <br>
+5- Ajout des dialect thymeleaf et layout
+6- Ajout de la section ou afficher les autres pages dans le template
+7- Utilisation du template dans une autre page
+<i>Il faut noter que dans layout:decorate="template1", <b>template1</b> fait référence au nom de la page template </i>
+8- Determination du contenu à insérer dans la section content1 du template1
+<h2>Validation</h2>
+1. Installer spring boot validation maven <br>

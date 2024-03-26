@@ -20,13 +20,14 @@ public class HopitalApplication implements CommandLineRunner {
         SpringApplication.run(HopitalApplication.class, args);
     }
 
+
     @Override
     public void run(String... args) throws Exception {
         Patient patient = Patient.builder()
                 .nom("MOROKO")
                 .dateNaissance(new Date())
                 .malade(false)
-                .score(15)
+                .score(101)
                 .build();
         patientRepository.save(patient);
     }

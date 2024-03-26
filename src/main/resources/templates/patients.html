@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+      layout:decorate="template1"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,51 +14,56 @@
 
 </head>
 <body>
-    <div class="p-3">
-        <div class="card">
-            <div class="card-header">
-                Liste des patients
-            </div>
-            <div class="card-body">
-                <form action="GET" th:action="@{index}">
-                    <lable>Rechercher:</lable>
-                    <input type="text" name="keywords" th:value="${keywords}">
-                    <button class="btn btn-success" type="submit"><i class="bi bi-search"></i></button>
-                </form>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>ID</th><th>NOM</th><th>DATE</th><th>MALADE</th><th>SCORE</th> <th>Action(s)</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="p:${patientList}">
-                        <td th:text="${p.id}"></td>
-                        <td th:text="${p.nom}"></td>
-                        <td th:text="${p.dateNaissance}"></td>
-                        <td th:text="${p.malade}"></td>
-                        <td th:text="${p.score}"></td>
-                        <td>
-                            <a class="btn btn-danger" th:href="@{/delete(id=${p.id},keywords=${keywords}, page=${currentPage} )}"
-                               onclick="javascript:return confirm('Voulez vous vraiment supprimer cet enregistrement ?')">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <ul class="nav navi-pills">
+    <div layout:fragment="content1">
+        <div class="p-3">
+            <div class="card">
+                <div class="card-header">
+                    Liste des patients
+                </div>
+                <div class="card-body">
+                    <form action="GET" th:action="@{index}">
+                        <lable>Rechercher:</lable>
+                        <input type="text" name="keywords" th:value="${keywords}">
+                        <button class="btn btn-success" type="submit"><i class="bi bi-search"></i></button>
+                    </form>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>ID</th><th>NOM</th><th>DATE</th><th>MALADE</th><th>SCORE</th> <th>Action(s)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="p:${patientList}">
+                            <td th:text="${p.id}"></td>
+                            <td th:text="${p.nom}"></td>
+                            <td th:text="${p.dateNaissance}"></td>
+                            <td th:text="${p.malade}"></td>
+                            <td th:text="${p.score}"></td>
+                            <td>
+                                <a class="btn btn-danger" th:href="@{/delete(id=${p.id},keywords=${keywords}, page=${currentPage} )}"
+                                   onclick="javascript:return confirm('Voulez vous vraiment supprimer cet enregistrement ?')">
+                                    <i class="bi bi-trash"></i>
+                                </a> &nbsp;
+                                <a class="btn btn-success" th:href="@{/editPatient(id=${p.id},keywords=${keywords}, page=${currentPage})}">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <ul class="nav navi-pills">
                     <span th:if="${currentPage>0}">
                         <a class="btn btn-info ms-1" th:href="@{/index(page=(${currentPage>0?currentPage:0}-1), keywords=${keywords})}"><<</a>
                     </span>
-                    <li th:each="page,status:${pages}" class="ms-1">
-                        <a th:text="${status.index+1}" th:href="@{/index(page=${status.index}, keywords=${keywords})}"
-                           th:class="${currentPage==status.index?'btn btn-info':'btn btn-outline-info'}"></a>
-                    </li>
-                    <span th:if="${currentPage<#lists.size(pages)-1}">
+                        <li th:each="page,status:${pages}" class="ms-1">
+                            <a th:text="${status.index+1}" th:href="@{/index(page=${status.index}, keywords=${keywords})}"
+                               th:class="${currentPage==status.index?'btn btn-info':'btn btn-outline-info'}"></a>
+                        </li>
+                        <span th:if="${currentPage<#lists.size(pages)-1}">
                         <a class="btn btn-info ms-1" th:href="@{/index(page=(${currentPage>0?currentPage:0}+1), keywords=${keywords})}">>></a>
                     </span>
-                </ul>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

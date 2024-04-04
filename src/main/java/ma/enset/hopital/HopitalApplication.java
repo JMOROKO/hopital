@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.awt.geom.PathIterator;
 import java.util.Date;
@@ -20,7 +23,6 @@ public class HopitalApplication implements CommandLineRunner {
         SpringApplication.run(HopitalApplication.class, args);
     }
 
-
     @Override
     public void run(String... args) throws Exception {
         Patient patient = Patient.builder()
@@ -30,5 +32,10 @@ public class HopitalApplication implements CommandLineRunner {
                 .score(101)
                 .build();
         patientRepository.save(patient);
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

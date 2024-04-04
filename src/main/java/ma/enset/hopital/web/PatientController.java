@@ -54,7 +54,7 @@ public class PatientController {
         patientRepository.save(patient);
         return "redirect:/index?page="+page+"&keywords="+keywords;
     }
-    @GetMapping("/editPatient") //@Valid demande à spring MVC d'effectuer la validation, demander à spring mvc de stocker les erreurs dans bindingResult
+    @GetMapping("/editPatient")
     public String edit(Model model, @RequestParam(name="id") Long id, @RequestParam(name="keywords") String keywords, @RequestParam(name="page") int page) {
         Optional<Patient> patientToEdit = patientRepository.findById(id);
         if(!patientToEdit.isPresent()){

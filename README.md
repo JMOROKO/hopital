@@ -71,13 +71,55 @@ nous allons transmettre les valeurs par défaut 0 et 5</p>
 <img src="assets/app/10.rendu.png" alt="">
 <h2>Mise en place d'une page template avec thymeleaf</h2>
 1- Recherche de la dépendance thymelead layout dialect maven (11)
+<img src="assets/app/11-thymeleaf-layout-dialect.png" alt="">
 2- Choix de la dernière version
+<img src="assets/app/12-choix-derniere-version.png" alt="">
 3- Ajout dans le fichier POM.xml
+<img src="assets/app/13-ajout-pom-et-regeneration-maven.png" alt="">
 4- Création de la page template HTML <br>
-5- Ajout des dialect thymeleaf et layout
+<img src="assets/app/template.png" alt="">
+5- Ajout des dialect thymeleaf et layout <br>
+<img src="assets/app/14-thymeleaf-layout.png" alt="">
 6- Ajout de la section ou afficher les autres pages dans le template
+<img src="assets/app/15-ajout-section.png" alt="">
 7- Utilisation du template dans une autre page
+<img src="assets/app/16-utilisation-page-template-autre-page.png" alt="">
 <i>Il faut noter que dans layout:decorate="template1", <b>template1</b> fait référence au nom de la page template </i>
 8- Determination du contenu à insérer dans la section content1 du template1
 <h2>Validation</h2>
 1. Installer spring boot validation maven <br>
+<img src="assets/app/17-validation.png" alt="">
+2. Ajout des annotations de validation <br>
+<img src="assets/app/17.1-utilisation-validation.png" alt="">
+3. Effectuer la validation avant l'enregistrement <br>
+<img src="assets/app/17.2-effectuer-validation-avant-save.png" alt=""> <br>
+<i>Ici @Valid permet d'effectuer la validation de l'objet avant l'enregistrement et bindingResult permet de vérifier les erreurs de validation</i>
+4. Afficher les erreurs de validation <br>
+<img src="assets/app/17.3-affichage-erreur-validation.png" alt="">
+<h2>Spring security (In Memory)</h2>
+1. Ajout de la dépendance dans le pom.xml
+<img src="assets/security/1-ajout-dependence.png" alt="">
+2. Utilisation du mot de passe par défaut généré par spring security
+<p>Après avoir ajouté la dépendance de sécurité et redémarré l'application.
+Un user par défaut et un mot de passe sont généré par spring security puis un formulaire de connection est mis en place.
+</p>
+3. Première connection 
+<p>Pour se connecter, il faut accéder à l'application, nous serons redirigé vers le formulaire d'authentification qui va demander le nom d'utilisateur et un mot de passe</p>
+<p>Login: <b>User</b> </p>
+<p>Password: <i>Consulter la console à chaque redémarrage</i></p>
+<img src="assets/security/2-redemarrer-app.png" alt="">
+<img src="assets/security/3-login.png" alt=""> <br>
+4. Personnaliser la configuration de spring security <br>
+    4.1- Creation du package et de la class de configuration <br>
+<img src="assets/security/4-creation-package-et-class-config.png" alt="">
+    4.2- Demander à spring security de vérifier l'authenfication avant d'accéder à n'importe quelle page <br>
+<img src="assets/security/5-demander-etre-authentifie.png" alt="">
+    4.3- Création des utilisateurs dans la mémoire de l'application <br>
+<img src="assets/security/6-authentification-inMemory.png" alt="">
+<i>{noop} permet de demander à spring de ne pas encoder le password</i>
+    4.4- Utilisation du password encoder <br>
+<img src="assets/security/7-creation-bean-password-encoder.png" alt="">
+<i>Ce bean sera injecté quand on en aura besoin afin de asher les mots de passe</i>
+    4.5- Utilisation du password encder
+<img src="assets/security/8-encoder-password.png" alt="">
+5. Afficher l'utilisateur connecté (Minute 37)

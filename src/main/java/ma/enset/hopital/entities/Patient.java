@@ -12,6 +12,7 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Builder @Data
 public class Patient {
+    // @TODO comment faire pour mettre personnaliser le formulaire d'authentification ?
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

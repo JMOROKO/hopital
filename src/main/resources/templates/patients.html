@@ -21,7 +21,7 @@
                     Liste des patients
                 </div>
                 <div class="card-body">
-                    <form action="GET" th:action="@{index}">
+                    <form action="GET" th:action="@{user/index}">
                         <lable>Rechercher:</lable>
                         <input type="text" name="keywords" th:value="${keywords}">
                         <button class="btn btn-success" type="submit"><i class="bi bi-search"></i></button>
@@ -29,7 +29,8 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>ID</th><th>NOM</th><th>DATE</th><th>MALADE</th><th>SCORE</th> <th>Action(s)</th>
+                            <th>ID</th><th>NOM</th><th>DATE</th><th>MALADE</th><th>SCORE</th>
+                            <th th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Action(s)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -39,12 +40,12 @@
                             <td th:text="${p.dateNaissance}"></td>
                             <td th:text="${p.malade}"></td>
                             <td th:text="${p.score}"></td>
-                            <td>
-                                <a class="btn btn-danger" th:href="@{/delete(id=${p.id},keywords=${keywords}, page=${currentPage} )}"
+                            <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                                <a class="btn btn-danger" th:href="@{/admin/delete(id=${p.id},keywords=${keywords}, page=${currentPage} )}"
                                    onclick="javascript:return confirm('Voulez vous vraiment supprimer cet enregistrement ?')">
                                     <i class="bi bi-trash"></i>
                                 </a> &nbsp;
-                                <a class="btn btn-success" th:href="@{/editPatient(id=${p.id},keywords=${keywords}, page=${currentPage})}">
+                                <a class="btn btn-success" th:href="@{/admin/editPatient(id=${p.id},keywords=${keywords}, page=${currentPage})}">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                             </td>
@@ -53,14 +54,14 @@
                     </table>
                     <ul class="nav navi-pills">
                     <span th:if="${currentPage>0}">
-                        <a class="btn btn-info ms-1" th:href="@{/index(page=(${currentPage>0?currentPage:0}-1), keywords=${keywords})}"><<</a>
+                        <a class="btn btn-info ms-1" th:href="@{/user/index(page=(${currentPage>0?currentPage:0}-1), keywords=${keywords})}"><<</a>
                     </span>
                         <li th:each="page,status:${pages}" class="ms-1">
-                            <a th:text="${status.index+1}" th:href="@{/index(page=${status.index}, keywords=${keywords})}"
+                            <a th:text="${status.index+1}" th:href="@{/user/index(page=${status.index}, keywords=${keywords})}"
                                th:class="${currentPage==status.index?'btn btn-info':'btn btn-outline-info'}"></a>
                         </li>
                         <span th:if="${currentPage<#lists.size(pages)-1}">
-                        <a class="btn btn-info ms-1" th:href="@{/index(page=(${currentPage>0?currentPage:0}+1), keywords=${keywords})}">>></a>
+                        <a class="btn btn-info ms-1" th:href="@{/user/index(page=(${currentPage>0?currentPage:0}+1), keywords=${keywords})}">>></a>
                     </span>
                     </ul>
                 </div>

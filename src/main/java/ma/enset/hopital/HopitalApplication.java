@@ -24,7 +24,7 @@ public class HopitalApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         Patient patient = Patient.builder()
                 .nom("MOROKO")
                 .dateNaissance(new Date())

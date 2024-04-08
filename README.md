@@ -123,3 +123,8 @@ Un user par défaut et un mot de passe sont généré par spring security puis u
     4.5- Utilisation du password encder
 <img src="assets/security/8-encoder-password.png" alt="">
 5. Afficher l'utilisateur connecté (Minute 37)
+5.1. Ajout du jar
+5.2. Ajout de l'instruction
+<h2>Protection des routes</h2>
+<h2>Personnalisation de la page login</h2>
+<h2>Sécuriser les méthodes avec des annotations</h2>

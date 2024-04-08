@@ -3,6 +3,7 @@ package ma.enset.hopital.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -12,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity //pour sécuriser les méthodes avec les annotations
 public class SecurityConfig {
 
     private PasswordEncoder passwordEncoder;
@@ -23,16 +25,22 @@ public class SecurityConfig {
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
         return new InMemoryUserDetailsManager(
-                User.withUsername("user1").password(passwordEncoder.encode("1234")).roles("USER").build(),
-                User.withUsername("user2").password(passwordEncoder.encode("1234")).roles("USER").build(),
-                User.withUsername("admin").password(passwordEncoder.encode("1234")).roles("USER", "ADMIN").build()
+            User.withUsername("user1").password(passwordEncoder.encode("1234")).roles("USER").build(),
+            User.withUsername("user2").password(passwordEncoder.encode("1234")).roles("USER").build(),
+            User.withUsername("admin").password(passwordEncoder.encode("1234")).roles("USER", "ADMIN").build()
         );
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity
-                .formLogin(Customizer.withDefaults())
+                .formLogin(ar->ar.loginPage("/login").permitAll());
+        // httpSecurity.rememberMe(ar->ar.init());
+        httpSecurity
+                .authorizeHttpRequests(ar->ar.requestMatchers("/webjar/**").permitAll())
+                .authorizeHttpRequests(ar->ar.requestMatchers("/user/**").hasRole("USER"))
+                .authorizeHttpRequests(ar->ar.requestMatchers("/admin/**").hasRole("ADMIN"))
+                .exceptionHandling(ar->ar.accessDeniedPage("/notAuthorized"))
                 .authorizeHttpRequests(ar->ar.anyRequest().authenticated());
         return httpSecurity.build();
     }

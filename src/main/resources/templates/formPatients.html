@@ -10,8 +10,9 @@
 <body>
   <div layout:fragment="content1">
     <div class="col-md-6 offset-3">
-      <!-- // @TODO comment protéger le formulaire des attaques CSRF? -->
-      <form th:action="@{/save}" method="POST">
+      <!-- // @TODO comment protéger le formulaire des attaques CSRF?
+       Automatiquement ajouté dans le formulaire avec spring security -->
+      <form th:action="@{/admin/save}" method="POST">
         <div class="form-group">
           <div class="col-6">
             <input type="number" name="id" th:value="${patient.id}" hidden="hidden">

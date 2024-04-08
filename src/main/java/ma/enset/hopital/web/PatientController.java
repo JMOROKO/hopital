@@ -6,6 +6,7 @@ import ma.enset.hopital.entities.Patient;
 import ma.enset.hopital.repository.PatientRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,7 +21,8 @@ import java.util.Optional;
 public class PatientController {
     private PatientRepository patientRepository;
 
-    @GetMapping("/index")
+    @GetMapping("/user/index")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String index(Model model, @RequestParam(name = "page", defaultValue = "0") int page
             , @RequestParam(name = "size", defaultValue = "5") int size
             , @RequestParam(name="keywords", defaultValue = "") String keywords){
@@ -33,28 +35,31 @@ public class PatientController {
         return "patients";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/admin/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String delete(@RequestParam(name="id") Long id, @RequestParam(name="keywords") String keywords, @RequestParam(name="page") int page){
         // @TODO  est ce que @RequestParam est la méthode appelé par défaut ?
         patientRepository.deleteById(id);
         return "redirect:/index?page="+page+"&keywords="+keywords;
     }
 
-    @GetMapping("/formPatients")
+    @GetMapping("/admin/formPatients")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String formPatient(Model model){
         model.addAttribute("patient", new Patient());
         return "formPatients";
     }
 
-    @PostMapping("/save") //@Valid demande à spring MVC d'effectuer la validation, demander à spring mvc de stocker les erreurs dans bindingResult
+    @PostMapping("/admin/save") //@Valid demande à spring MVC d'effectuer la validation, demander à spring mvc de stocker les erreurs dans bindingResult
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String save(@Valid Patient patient, BindingResult bindingResult
             , @RequestParam(name="page", defaultValue = "0") int page
             , @RequestParam(name="keywords", defaultValue = "") String keywords){
         if(bindingResult.hasErrors()) return "formPatients";
         patientRepository.save(patient);
-        return "redirect:/index?page="+page+"&keywords="+keywords;
+        return "redirect:/user/index?page="+page+"&keywords="+keywords;
     }
-    @GetMapping("/editPatient")
+    @GetMapping("/admin/editPatient")
     public String edit(Model model, @RequestParam(name="id") Long id, @RequestParam(name="keywords") String keywords, @RequestParam(name="page") int page) {
         Optional<Patient> patientToEdit = patientRepository.findById(id);
         if(!patientToEdit.isPresent()){
@@ -65,6 +70,11 @@ public class PatientController {
         model.addAttribute("page", page);
         model.addAttribute("keywords", keywords);
         return "editPatient";
+    }
+
+    @GetMapping("/")
+    public String home(){
+        return "redirect:/user/index";
     }
 
 }
